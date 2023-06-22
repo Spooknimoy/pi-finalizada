@@ -1,0 +1,33 @@
+{
+  "name": "trabalho",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
+    "@mui/x-data-grid-generator": "^6.5.0",
+    "@types/react-transition-group": "^4.4.6",
+    "ag-grid-community": "^29.3.5",
+    "ag-grid-enterprise": "^29.3.5",
+    "ag-grid-react": "^29.3.5",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.2.3",
+    "chart.js": "^4.3.0",
+    "framer-motion": "^10.12.16",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-apexcharts": "^1.4.0",
+    "react-bootstrap": "^2.7.4",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "18.2.0",
+    "react-spring": "^9.7.1"
+  }
+}

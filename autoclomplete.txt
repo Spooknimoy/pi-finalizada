@@ -1,0 +1,119 @@
+<Autocomplete
+  style={barra}
+  id="Deputados"
+  freeSolo
+  options={deputados.map((option) => option.nome)}
+  renderInput={(params) => (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <TextField {...params} label="Deputados" sx={{ marginRight: '10px' }} />
+      <Button disabled={false} variant="elevated" endIcon={<SendIcon />} sx={{ marginLeft: '-10px' }}  size='large'>
+        Enviar
+      </Button>
+    </div>
+  )}
+  sx={{ width: 500 }}
+
+
+
+
+
+  import Pagina from '@/Component/Pagina'
+import React  from 'react'
+import apiDeputados from '@/services/apiDeputados';
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
+import { Container } from 'react-bootstrap';
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 180 },
+  {
+    field: 'firstName',
+    headerName: 'First name',
+    width: 180,
+    editable: true,
+    valueGetter: (params) => params.row.nome.split(' ')[0], // Obtém o primeiro nome a partir do campo "nome"
+  },
+  {
+    field: 'lastName',
+    headerName: 'Last name',
+    width: 180,
+    editable: true,
+    valueGetter: (params) => {
+      const fullName = params.row.nome.split(' '); // Divide o nome completo em um array
+      fullName.shift(); // Remove o primeiro nome do array
+      return fullName.join(' '); // Junta os nomes restantes em um único campo "last name"
+    },
+  },
+  {
+    field: 'fullName',
+    headerName: 'Full name',
+    description: 'This column has a value getter and is not sortable.',
+    sortable: false,
+    width: 180,
+    valueGetter: (params) => params.row.nome, // Utiliza o campo "nome" como nome completo
+  },
+  {
+    field: 'despesas',
+    headerName: 'Despesas',
+    width: 180,
+    editable: true,
+    valueGetter: (params) => {
+      const despesas = params.row.ultimoStatus?.gastoTotal; // Valor das despesas do deputado
+      const link = `https://dadosabertos.camara.leg.br/api/v2/deputados/${params.row.id}/despesas`; // URL da API para despesas
+      return despesas ? <a href={link}>{despesas}</a> : null; // Retorna o link como um elemento <a> se houver despesas, caso contrário, retorna null
+    },
+  },
+  {
+    field: 'partido',
+    headerName: 'Partido',
+    width: 180,
+    editable: false,
+    valueGetter: (params) => {
+      const partido = params.row.ultimoStatus?.siglaPartido; // Sigla do partido do deputado
+      const link = `https://dadosabertos.camara.leg.br/api/v2/partidos/${params.row.id}`; // URL da API para partidos
+      return partido ? <a href={link}>{partido}</a> : null; // Retorna o link como um elemento <a> se houver partido, caso contrário, retorna null
+    },
+  },
+];
+
+
+
+export default function DataGridDemo({ deputados }) {
+  return (
+    <>
+      <Pagina titulo='deputados'></Pagina>
+      <Container>
+
+        <Box sx={{ height: 700, width: '100%' }}>
+          <DataGrid
+            rows={deputados}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 15,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        </Box>
+      </Container>
+    </>
+  );
+}
+
+export async function getServerSideProps(context) {
+
+  const respDeputados = await apiDeputados.get('/deputados')
+  const deputados = respDeputados.data.dados
+
+  return {
+    props: { deputados },
+  }
+}
+
+
+// react google charts calendario de eventos 
