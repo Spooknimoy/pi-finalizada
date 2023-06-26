@@ -59,7 +59,7 @@ const Index = () => {
             >
                     <Link  style={{textDecoration: 'none'}} href={`/partidos/${item.id}`}>
                   <div>
-                    <Card.Img variant="top" src={item.urlFotoLider || 'https://i.im.ge/2023/06/22/if44tc.erro.png'} />
+                    <Card.Img variant="top" src={item.urlFotoLider || 'https://cdn.discordapp.com/attachments/925177373261983765/1122919029573681252/33.png'} />
                     <div
                       style={{
                         position: 'absolute',
